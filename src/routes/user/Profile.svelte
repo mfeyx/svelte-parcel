@@ -134,7 +134,9 @@
 </svelte:head>
 
 {#if isLoading}
-<LoadingSpinner />  
+  <section>
+  <LoadingSpinner />  
+  </section>
 {/if}
 
 {#if currentUser}

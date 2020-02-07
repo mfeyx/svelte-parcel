@@ -6,6 +6,7 @@ This is a Svelte template using Parcel - inspired by Hackathon Starter ref https
 
 - Used svelte-spa-router for handling routes ref https://github.com/ItalyPaleAle/svelte-spa-router
 - Bundling using Parcel
+- CSS framework [Bulma](https://bulma.io/)
 - Testing with Jest (with Snapshot support)
 - Formatting with ESLint and Prettier
 - Transpiling with Babel
