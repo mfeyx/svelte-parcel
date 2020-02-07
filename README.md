@@ -1,11 +1,13 @@
 # A Svelte template
 
-This is a Svelte template using Parcel - inspired by Hackathon Starter ref https://hackathon-starter.walcony.com
+This is a Svelte template using [Parcel](https://parceljs.org/) and [svelte-span-router](https://github.com/ItalyPaleAle/svelte-spa-router) - inspired by [Hackathon Starter](https://hackathon-starter.walcony.com)
+
+Express JS server side repo can be found here [express-api](https://github.com/mylastore/express-api.git)
 
 ## Included in template
 
-- Used svelte-spa-router for handling routes ref https://github.com/ItalyPaleAle/svelte-spa-router
-- Bundling using Parcel
+- Used svelte-spa-router for handling routes [svelte-span-router](https://github.com/ItalyPaleAle/svelte-spa-router)
+- Bundling using [Parcel](https://parceljs.org/)
 - CSS framework [Bulma](https://bulma.io/)
 - Testing with Jest (with Snapshot support)
 - Formatting with ESLint and Prettier
@@ -15,8 +17,8 @@ This is a Svelte template using Parcel - inspired by Hackathon Starter ref https
 - User profile page
 - User forgot password
 - User roles (customer, admin etc)
-- Contact forms with Nodemailer on the server side ref https://nodemailer.com/about/ and Sendgrid ref https://sendgrid.com/
-- APi server with Express JS - git ref  https://github.com/mylastore/express-api.git
+- Contact forms with Nodemailer on the server side [ref](https://nodemailer.com/about/) and Sendgrid [ref](https://sendgrid.com/)
+- Works with this repo - APi server with Express JS - [express-api](https://github.com/mylastore/express-api.git)
 
 ## Getting started
 
@@ -34,7 +36,7 @@ To build the project run the following:
 
 ## Tests
 
-_NOTE: Current open issue in jest-transform-svelte when adding preprocessor tests get stuck in an infinite loop (works in Wallaby though), ref: https://github.com/rspieker/jest-transform-svelte/issues/12_
+_NOTE: Current open issue in jest-transform-svelte when adding preprocessor tests get stuck in an infinite loop (works in Wallaby though), [Current issue](https://github.com/rspieker/jest-transform-svelte/issues/12_)
 
 I prefer running my tests using Wallaby, but if you prefer plain old command line, just type the following to run your tests:
 
