@@ -2,11 +2,7 @@
   import TextInput from "../components/Ui/TextInput.svelte";
   import { validateRequired, validateEmail } from "../helpers/validate.js";
   import * as api from "../helpers/api.js";
-  import ls from "local-storage";
-  import userStore from "../stores/user-store";
   import Message from "../components/Message.svelte";
-  import ListErrors from '../components/ListErrors';
-
   import { replace } from "svelte-spa-router";
 
   let name = "";
@@ -15,7 +11,6 @@
   let phone = "";
   let content = "";
   let error;
-  let errors = null;
   let success;
 
   $: nameValid = !validateRequired(name);
@@ -35,7 +30,7 @@
       };
       const res = await api.post("quotes/create", userData);
       if (res && res.errors) {
-        errors = res.errors.error;
+        error = res.errors.message;
       } else {
         success = 'Your quote was sent successfully!'
         document.getElementById("my-form").reset();
@@ -58,6 +53,7 @@
 
 <svelte:head>
     <title>Get Quote</title>
+    <meta name="robots" content="noindex, nofollow">
 </svelte:head>
 
 <div class="columns is-mobile">
@@ -109,8 +105,6 @@
         className="is-large"
         bind:value={content} />
 
-      <ListErrors {errors}/>
-
       {#if error}
         <Message message={error} messageType="warning" />
       {/if}
@@ -138,10 +132,8 @@
 </div>
 
 <style>
-.lg{
-  font-size: 2em;
-  margin-bottom: .3em;
-}
-
-
+  .lg{
+    font-size: 2em;
+    margin-bottom: .3em;
+  }
 </style>

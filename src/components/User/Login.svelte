@@ -1,20 +1,21 @@
-<script>
-  import userStore from "../../stores/user-store";
-  import { createEventDispatcher } from "svelte";
-  import TextInput from "../Ui/TextInput.svelte";
-  import * as api from "../../helpers/api.js";
-  import { validateEmail, validatePassword, validateRequired } from "../../helpers/validate.js";
-  import ls from "local-storage";
-  import Message from "../../components/Message.svelte";
-  import { replace } from "svelte-spa-router";
-  import jwt_decode from 'jwt-decode';
 
-  let email = '';
-  let password = '';
-  let key;
-  let keyCode;
-  let error;
-  let strategy = 'local';
+<script>
+  import userStore from "../../stores/user-store"
+  import { createEventDispatcher } from "svelte"
+  import TextInput from "../Ui/TextInput.svelte"
+  import * as api from "../../helpers/api.js"
+  import { validateEmail, validatePassword, validateRequired } from "../../helpers/validate.js"
+  import ls from "local-storage"
+  import Message from "../../components/Message.svelte"
+  import { replace } from "svelte-spa-router"
+  import jwt_decode from 'jwt-decode'
+
+  let email = ''
+  let password = ''
+  let key
+  let keyCode
+  let error
+  let strategy = 'local'
 
   const dispatch = createEventDispatcher();
 

@@ -4,9 +4,12 @@
   import routes from "./routes";
   import { replace } from "svelte-spa-router";
 
+  const d = new Date();
+  let year = d.getFullYear();
+  let companyName = process.env.COMPANY_NAME;
+
   // Handles the "conditionsFailed" event dispatched by the router when a component can't be loaded because one of its pre-condition failed
   function conditionsFailed(event) {
-    console.error("conditionsFailed event", event.detail);
     // Perform any action, for example replacing the current route
     if (
       event.detail.location === "/login" ||
@@ -39,7 +42,7 @@
 
 <footer>
   <p>
-    © 2020 MY LA STORE, All Rights Reserved &nbsp; | &nbsp;
+    © {year} {companyName}, All Rights Reserved &nbsp; | &nbsp;
     <a href="#/privacy">privacy policy</a>
   </p>
 </footer>

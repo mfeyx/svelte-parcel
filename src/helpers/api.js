@@ -1,6 +1,5 @@
 
-const base = 'https://papaslive.com/api/v1';
-//const base = 'http://localhost:8000/api/v1';
+const base = 'http://localhost:8000/api/v1';
 
 function send({ method, path, data, token }) {
 	const fetch = process.browser ? window.fetch : require('node-fetch').default;

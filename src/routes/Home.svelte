@@ -1,4 +1,5 @@
 <script>
+    let companyName = process.env.COMPANY_NAME
     const img = require('/src/assets/images/website-creation-example.jpg');
     const shop3 = require('/src/assets/images/shop-3.jpg');
 
@@ -21,13 +22,13 @@
 </script>
 
 <svelte:head>
-    <title>MY LA STORE - Web development services</title>
+    <title>{companyName} - Web development services</title>
 </svelte:head>
 
 <section>
 <div class="content">
     <div class="has-text-centered blur">
-        <h1><strong>Get your business online with <br> My LA Store Services</strong></h1>
+        <h1><strong>Get your business online with <br> {companyName} Services</strong></h1>
         <h2 class="now-playing">{nowPlaying}</h2>
         <br>
         <a href="#/quote" type="button" class="button is-primary is-large">Start Now</a>
@@ -43,7 +44,7 @@
             <div class="content">
                 <h1>Do you need to improve your website design?</h1>
                 <p><strong>Have an inspiration website?</strong></p>
-                <p>My LA Store can customize the design to tailored your industry and all the
+                <p>{companyName} can customize the design to tailored your industry and all the
                     features you need.</p>
                 <a href="#/quote" type="button" class="button is-primary is-large">Start Now</a>
             </div>
@@ -62,11 +63,11 @@
             <div class="columns custom">
                 <div class="column is-7">
                     <h1>Whether you need a website, online shop or more.</h1>
-                    <p>My LA Store can help you get started from a simple blog to a more complex website.</p>
+                    <p>{companyName} can help you get started from a simple blog to a more complex website.</p>
                     <a href="#/quote" type="button" class="button is-primary is-large">Start Now</a>
                 </div>
                 <div class="column img-container is-5">
-                    <img class="custom-img" src="{shop3}">
+                    <img alt="Shoppingbag Image" class="custom-img" src="{shop3}">
                     <p>&nbsp;</p>
                 </div>
             </div>
@@ -131,9 +132,7 @@
         </div>
     </div>
 </div>
-
 </section>
-
 
 <style>
     .lg{

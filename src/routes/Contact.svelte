@@ -69,7 +69,8 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 <svelte:head>
-  <title>Get Quote</title>
+  <title>Contact Us Form</title>
+  <meta name="robots" content="noindex, nofollow">
 </svelte:head>
 
 <div class="columns is-mobile">

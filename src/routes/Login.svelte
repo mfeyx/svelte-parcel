@@ -1,21 +1,20 @@
 
 <script>
     import Login from "../components/User/Login.svelte";
+
+    let companyName = process.env.COMPANY_NAME
 </script>
 
 <svelte:head>
     <title>Login</title>
+    <meta name="robots" content="noindex, nofollow">
 </svelte:head>
 
 <div class="column is-8 is-offset-2">
     <div class="card la-card">
         <div class="card-content clearfix">
             <h2 class="la-headline">HI, THERE</h2>
-            <p class="is-centered">You can log in to your My LA Store account here.</p>
-
-            <!-- <div class="center-btn">
-                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="white"></div>
-            </div> -->
+            <p class="is-centered">You can log in to your {companyName} account here.</p>
             <div class="la-divider">
                 <hr class="la-divider-left">
                 <p class="la-divider-text">
@@ -33,11 +32,6 @@
 </div>
 
 <style>
-    .center-btn{
-        width: 120px;
-        margin: auto;
-        display: block;
-    }
     .card-footer{
         background: #00818b;
         border-bottom-left-radius: 4px;
@@ -69,13 +63,6 @@
     .is-centered{
         margin: 20px 0;
         text-align: center;
-    }
-    .la-google-btn{
-        border: 2px solid #e6e7f0;
-        line-height: 1;
-    }
-    .la-google-btn span{
-        margin-right: 30px;
     }
     .la-card{
         border-radius: 4px;

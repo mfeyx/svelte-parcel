@@ -1,20 +1,33 @@
 <script>
     import {link} from 'svelte-spa-router'
+    import notFoundImg from '../assets/images/404.svg'
+    import roketImg from '../assets/images/rocket.svg'
+    import astronautImg from '../assets/images/astronaut.svg'
+    import earthImg from '../assets/images/earth.svg'
+    import moonImg from '../assets/images/moon.svg'
+    import overlayStars from '../assets/images/overlay_stars.svg'
+
 </script>
 
-<div class="stars bg-purple">
+<svelte:head>
+    <title>Not Found</title>
+    <meta name="robots" content="noindex, nofollow">
+</svelte:head>
+
+<div>
+    <img class="stars" src="{overlayStars}" alt="Stars">
     <div class="central-body">
-        <img class="image-404" src="http://salehriaz.com/404Page/img/404.svg" width="300px">
+        <img class="image-404" src="{notFoundImg}" width="300px">
         <a href="/" use:link class="btn-go-home">GO BACK HOME</a>
     </div>
     <div class="objects">
-        <img class="object_rocket" src="http://salehriaz.com/404Page/img/rocket.svg" width="40px">
+        <img class="object_rocket" src="{roketImg}" width="40px">
         <div class="earth-moon">
-            <img class="object_earth" src="http://salehriaz.com/404Page/img/earth.svg" width="100px">
-            <img class="object_moon" src="http://salehriaz.com/404Page/img/moon.svg" width="80px">
+            <img class="object_earth" src="{earthImg}" width="100px">
+            <img class="object_moon" src="{moonImg}" width="80px">
         </div>
         <div class="box_astronaut">
-            <img class="object_astronaut" src="http://salehriaz.com/404Page/img/astronaut.svg" width="140px">
+            <img class="object_astronaut" src="{astronautImg}" width="140px">
         </div>
     </div>
     <div class="glowing_stars">
@@ -24,10 +37,10 @@
         <div class="star"></div>
         <div class="star"></div>
     </div>
-
 </div>
 
 <style>
+
     @-moz-keyframes rocket-movement { 100% {-moz-transform: translate(1200px,-600px);} }
     @-webkit-keyframes rocket-movement {100% {-webkit-transform: translate(1200px,-600px); } }
     @keyframes rocket-movement { 100% {transform: translate(1200px,-600px);} }
@@ -67,67 +80,8 @@
         90%,100% { -webkit-opacity: 1; opacity: 1; -webkit-transform: scale(1.2); transform: scale(1.2); border-radius: 999999px;}
     }
 
-    .spin-earth-on-hover{
-        transition: ease 200s !important;
-        transform: rotate(-3600deg) !important;
-    }
-
-    html, body{
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        font-family: 'Dosis', sans-serif;
-        font-weight: 300;
-        -webkit-user-select: none; /* Safari 3.1+ */
-        -moz-user-select: none; /* Firefox 2+ */
-        -ms-user-select: none; /* IE 10+ */
-        user-select: none; /* Standard syntax */
-    }
-
-    .bg-purple{
-        background: url(http://salehriaz.com/404Page/img/bg_purple.png) !important;
-        background-repeat: repeat-x;
-        background-size: cover;
-        background-position: left top;
-        height: 100%;
-        overflow: hidden;
-
-    }
-
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        /*    overflow: hidden;*/
-        display: flex;
-        align-items: center;
-    }
-
-    li {
-        float: left;
-        padding: 0px 15px;
-    }
-
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        letter-spacing : 2px;
-        font-size: 12px;
-
-        -webkit-transition: all 0.3s ease-in;
-        -moz-transition: all 0.3s ease-in;
-        -ms-transition: all 0.3s ease-in;
-        -o-transition: all 0.3s ease-in;
-        transition: all 0.3s ease-in;
-    }
-
-    li a:hover {
-        color: #ffcb39;
-    }
-
     .btn-go-home{
+        background: #FFCB39;
         position: relative;
         z-index: 200;
         margin: 15px auto;
@@ -195,10 +149,6 @@
         */
     }
 
-    .earth-moon{
-
-    }
-
     .object_astronaut{
         animation: rotate-astronaut 200s infinite linear both alternate;
     }
@@ -219,7 +169,7 @@
     }
 
     .stars{
-        background: url(http://salehriaz.com/404Page/img/overlay_stars.svg);
+        position: absolute;
         background-repeat: repeat;
         background-size: contain;
         background-position: left top;
@@ -262,18 +212,6 @@
     }
 
     @media only screen and (max-width: 600px){
-        .navbar-links{
-            display: none;
-        }
-
-        .custom-navbar{
-            text-align: center;
-        }
-
-        .brand-logo img{
-            width: 120px;
-        }
-
         .box_astronaut{
             top: 70%;
         }

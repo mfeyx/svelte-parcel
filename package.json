@@ -2,6 +2,9 @@
   "name": "svelte-template",
   "version": "1.0.0",
   "description": "Svelte template (with support for eslint, wallaby, prettier, and parcel)",
+  "author": "Oscar Quinteros <mrtonyq22@gmail.com>",
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "test": "jest",
     "start": "parcel index.html",
@@ -38,6 +41,7 @@
     "@beyonk/svelte-social-auth": "^2.0.0",
     "api.js": "0.0.5",
     "bulma": "^0.8.0",
+    "dotenv": "^8.2.0",
     "jwt-decode": "^2.2.0",
     "local-storage": "^2.0.0",
     "moment": "^2.24.0",
@@ -47,5 +51,9 @@
     "svelte-spa-router": "^2.0.0",
     "tools": "0.0.0",
     "utils": "^0.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mylastore/svelte-parcel.git"
   }
 }

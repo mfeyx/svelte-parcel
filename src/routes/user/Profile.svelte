@@ -1,15 +1,16 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
-  import moment from "moment";
-  import userStore from "../../stores/user-store.js";
-  import ls from "local-storage";
-  import * as api from "../../helpers/api.js";
-  import Message from "../../components/Message.svelte";
-  import { validateRequired, validateEmail, validatePassword } from "../../helpers/validate";
-  import TextInput from "../../components/Ui/TextInput.svelte";
-  import { replace } from "svelte-spa-router";
-  import defaultImg from "../../assets/images/default-image.jpg";
-  import { Toast } from "../../helpers/toast";
+  import { onMount, onDestroy } from "svelte"
+  import moment from "moment"
+  import userStore from "../../stores/user-store.js"
+  import ls from "local-storage"
+  import * as api from "../../helpers/api.js"
+  import Message from "../../components/Message.svelte"
+  import { validateRequired, validateEmail, validatePassword } from "../../helpers/validate"
+  import TextInput from "../../components/Ui/TextInput.svelte"
+  import { replace } from "svelte-spa-router"
+  import defaultImg from "../../assets/images/default-image.jpg"
+  import { Toast } from "../../helpers/toast"
+  import LoadingSpinner from '../../components/Ui/LoadingSpinner.svelte'
 
   let unsubscribe;
   let memberSince;
@@ -27,6 +28,7 @@
   let gravatar = '';
   let password = '';
   let passwordConfirmation = '';
+  let isLoading = true;
 
   token = ls.get("jwt");
 
@@ -46,6 +48,7 @@
         return moment(new Date(date)).format("MMMM DD, YYYY");
       }
       memberSince = formatDate(currentUser.memberSince);
+      isLoading = false;
     }
   });
 
@@ -126,8 +129,13 @@
 </script>
 
 <svelte:head>
-  <title>Profile</title>
+  <title>Profile Page</title>
+  <meta name="robots" content="noindex, nofollow">
 </svelte:head>
+
+{#if isLoading}
+<LoadingSpinner />  
+{/if}
 
 {#if currentUser}
   <section>

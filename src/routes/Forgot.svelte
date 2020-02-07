@@ -32,6 +32,11 @@
   }
 </script>
 
+<svelte:head>
+    <title>Forgot Password</title>
+    <meta name="robots" content="noindex, nofollow">
+</svelte:head>
+
 <style>
   .la-divider {
     display: flex;

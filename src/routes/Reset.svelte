@@ -39,6 +39,11 @@
   }
 </script>
 
+<svelte:head>
+    <title>Reset Password</title>
+    <meta name="robots" content="noindex, nofollow">
+</svelte:head>
+
 <style>
   .la-divider {
     display: flex;
