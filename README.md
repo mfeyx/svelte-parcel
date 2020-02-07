@@ -1,8 +1,11 @@
+![](https://i.imgur.com/3wVdJZE.jpg)
+
 # A Svelte template
 
 This is a Svelte template using [Parcel](https://parceljs.org/) and [svelte-span-router](https://github.com/ItalyPaleAle/svelte-spa-router) - inspired by [Hackathon Starter](https://hackathon-starter.walcony.com)
 
 Express JS server side repo can be found here [express-api](https://github.com/mylastore/express-api.git)
+
 
 ## Included in template
 
@@ -48,3 +51,15 @@ You may just check for linting or auto fix using these two options
 
     npm run lint
     npm run lint:fix
+
+## Login
+![](https://i.imgur.com/N4Jgn2N.jpg)
+
+## Forgot Password
+![](https://i.imgur.com/PbjA4Sr.jpg)
+
+## User Profile
+![](https://i.imgur.com/dP7FMia.jpg)
+
+## Admin Panel
+![](https://i.imgur.com/tRW0JQ2.png)
