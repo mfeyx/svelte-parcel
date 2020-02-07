@@ -6,8 +6,8 @@ Express JS server side repo can be found here [express-api](https://github.com/m
 
 ## Included in template
 
-- Used svelte-spa-router for handling routes [svelte-span-router](https://github.com/ItalyPaleAle/svelte-spa-router)
-- Bundling using [Parcel](https://parceljs.org/)
+- Used svelte-spa-router for handling routes [svelte-spa-router](https://github.com/ItalyPaleAle/svelte-spa-router)
+- Bundling [Parcel](https://parceljs.org/)
 - CSS framework [Bulma](https://bulma.io/)
 - Testing with Jest (with Snapshot support)
 - Formatting with ESLint and Prettier
