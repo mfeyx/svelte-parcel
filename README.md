@@ -9,16 +9,16 @@ Express JS server side repo can be found here [express-api](https://github.com/m
 - Used svelte-spa-router for handling routes [svelte-spa-router](https://github.com/ItalyPaleAle/svelte-spa-router)
 - Bundling [Parcel](https://parceljs.org/)
 - CSS framework [Bulma](https://bulma.io/)
-- Testing with Jest (with Snapshot support)
+- Testing with [Jest](https://jestjs.io/) (with Snapshot support)
 - Formatting with ESLint and Prettier
 - Transpiling with Babel
-- Wallaby enabled
+- [Wallaby](https://wallabyjs.com/) enabled
 - User authentication
 - User profile page
 - User forgot password
 - User roles (customer, admin etc)
-- Contact forms with Nodemailer on the server side [ref](https://nodemailer.com/about/) and Sendgrid [ref](https://sendgrid.com/)
-- Works with this repo - APi server with Express JS - [express-api](https://github.com/mylastore/express-api.git)
+- Contact forms with [Nodemailer](https://nodemailer.com/about/) on the server side and [Sendgrid](https://sendgrid.com/)
+- Works with this Express API server [express-api](https://github.com/mylastore/express-api.git)
 
 ## Getting started
 
