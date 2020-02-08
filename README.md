@@ -59,6 +59,7 @@ You may just check for linting or auto fix using these two options
 ![](https://i.imgur.com/PbjA4Sr.jpg)
 
 ## User Profile
+![](https://i.imgur.com/pTKFMWz.jpg)
 ![](https://i.imgur.com/dP7FMia.jpg)
 
 ## Admin Panel
