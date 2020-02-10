@@ -23,7 +23,7 @@
                 <hr class="ua-divider-right">
             </div>
             
-            <Login/>
+            <Login />
         </div>
         <footer class="card-footer">
             <a href="#/register" class="card-footer-item">Don't have an account?</a>

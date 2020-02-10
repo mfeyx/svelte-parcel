@@ -6,7 +6,6 @@
     }
 </script>
 
-
 {#if errors }
     <ul class="error-messages notification is-danger">
       {#each Object.values(errors) as key}

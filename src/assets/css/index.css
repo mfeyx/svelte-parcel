@@ -199,12 +199,17 @@ button.toastjs-btn:hover{
 }
 
 .table-responsive{
-    overflow-x: scroll;
+    overflow-x: auto;
     margin-bottom: 40px;
 }
 
 .table-responsive table{
     margin-bottom: 30px;
+}
+
+.table td{
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 .clear{

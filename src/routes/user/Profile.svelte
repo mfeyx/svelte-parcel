@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte"
-  import moment from "moment"
+  import { formatDate } from "../../helpers/utils"
   import userStore from "../../stores/user-store.js"
   import ls from "local-storage"
   import * as api from "../../helpers/api.js"
@@ -25,7 +25,6 @@
   let location = '';
   let website = '';
   let gender = '';
-  let gravatar = '';
   let password = '';
   let passwordConfirmation = '';
   let isLoading = true;
@@ -43,9 +42,6 @@
         gender = currentUser.profile.gender || '';
         website = currentUser.profile.website || '';
         location = currentUser.profile.location || '';
-      }
-      function formatDate(date) {
-        return moment(new Date(date)).format("MMMM DD, YYYY");
       }
       memberSince = formatDate(currentUser.memberSince);
       isLoading = false;

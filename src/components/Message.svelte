@@ -1,18 +1,23 @@
 <script>
     import {fade} from 'svelte/transition';
+    import {createEventDispatcher, onMount} from "svelte";
     export let message;
     export let messageType;
+       
+    const dispatch = createEventDispatcher();
 
+    function closeMessage(){
+        dispatch('closeMessageEvent')
+    }
 </script>
 
-{#if message}
 <div class="notification is-{messageType} alert-dismissible" transition:fade>
     {message}
-    <button type="button" class="close-button" on:click={()=> message = null }>
+    <button type="button" class="close-button" on:click={closeMessage }>
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-{/if}
+
 
 <style>
     .notification{

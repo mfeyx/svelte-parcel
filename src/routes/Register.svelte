@@ -22,6 +22,8 @@
                 <hr class="ua-divider-right">
             </div>
             <Register/>
+            <p class="help">Password minimum length 8, must have 1 capital letter, 1 number and 1 special character.</p>
+            <br>
             <p>By creating an account you agree to our <a href="#/privacy">privacy policy</a></p>
         </div>
         <footer class="card-footer">

@@ -2,7 +2,7 @@
 
 # A Svelte template
 
-This is a Svelte template using [Parcel](https://parceljs.org/) and [svelte-span-router](https://github.com/ItalyPaleAle/svelte-spa-router) - inspired by [Hackathon Starter](https://hackathon-starter.walcony.com)
+This is a Svelte template using [Parcel](https://parceljs.org/) and [svelte-spa-router](https://github.com/ItalyPaleAle/svelte-spa-router) - inspired by [Hackathon Starter](https://hackathon-starter.walcony.com)
 
 Express JS server side repo can be found here [express-api](https://github.com/mylastore/express-api.git)
 
@@ -17,9 +17,10 @@ Express JS server side repo can be found here [express-api](https://github.com/m
 - Transpiling with Babel
 - [Wallaby](https://wallabyjs.com/) enabled
 - User authentication
-- User profile page
+- User profile page with [gravatar](https://en.gravatar.com/) if availabe else adds a defautl image
 - User forgot password
 - User roles (customer, admin etc)
+- Admin panel section - (currently I am only fetching users) TODO pagination
 - Contact forms with [Nodemailer](https://nodemailer.com/about/) on the server side and [Sendgrid](https://sendgrid.com/)
 - Works with this Express API server [express-api](https://github.com/mylastore/express-api.git)
 

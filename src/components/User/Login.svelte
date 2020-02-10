@@ -1,23 +1,24 @@
-
 <script>
-  import userStore from "../../stores/user-store"
-  import { createEventDispatcher } from "svelte"
-  import TextInput from "../Ui/TextInput.svelte"
-  import * as api from "../../helpers/api.js"
-  import { validateEmail, validatePassword, validateRequired } from "../../helpers/validate.js"
-  import ls from "local-storage"
-  import Message from "../../components/Message.svelte"
-  import { replace } from "svelte-spa-router"
-  import jwt_decode from 'jwt-decode'
+  import userStore from "../../stores/user-store";
+  import TextInput from "../Ui/TextInput.svelte";
+  import * as api from "../../helpers/api.js";
+  import {
+    validateEmail,
+    validatePassword,
+    validateRequired
+  } from "../../helpers/validate.js";
+  import ls from "local-storage";
+  import Message from "../../components/Message.svelte";
+  import { replace } from "svelte-spa-router";
+  import jwt_decode from "jwt-decode";
 
-  let email = ''
-  let password = ''
-  let key
-  let keyCode
-  let error
-  let strategy = 'local'
-
-  const dispatch = createEventDispatcher();
+  let email = "";
+  let password = "";
+  let key;
+  let keyCode;
+  let error;
+  let strategy = "local";
+  let thisMessage;
 
   $: emailValid = validateEmail(email);
   $: passwordValid = validatePassword(password);
@@ -27,29 +28,32 @@
     error = null;
     try {
       const res = await api.post("users/login", { email, password, strategy });
-        if (res && res.errors) {
+      if (res && res.errors) {
+        thisMessage = true;
         return (error = res.errors.message);
-      } else {
-        ls.set('jwt', res.token.token);
-        userStore.setUser(res.user);
-        await replace("/user/profile");
       }
+      await ls.set("jwt", res.token.token);
+      await userStore.setUser(res.user);
+      await replace('/user/profile')
+      
     } catch (err) {
       if (err) {
+        thisMessage = true;
         return (error = err);
       }
     }
-  } // end of Submit form
+  }
 
-  function cancel() {
-    dispatch("cancel");
+  function closeThisMessage() {
+    thisMessage = null;
   }
 
   function handleKeyDown(event) {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 && formIsValid) {
       submitForm();
     }
   }
+
 </script>
 
 <style>
@@ -66,8 +70,8 @@
 
 <svelte:window on:keydown={handleKeyDown} />
 
-{#if error}
-  <Message message={error} messageType="warning" />
+{#if thisMessage}
+  <Message message={error} on:closeMessageEvent={closeThisMessage} messageType="warning" />
 {/if}
 
 <form>
@@ -90,6 +94,7 @@
     className="is-large"
     on:input={event => (password = event.target.value)} />
 </form>
+<p class="help">Password minimum length 8, must have 1 capital letter, 1 number and 1 special character.</p>
 <div class="clearfix is-center">
   <a href="#/forgot">Forgot Password?</a>
 </div>

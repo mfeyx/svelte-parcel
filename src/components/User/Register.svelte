@@ -6,13 +6,14 @@
     import ls from 'local-storage';
     import userStore from "../../stores/user-store";
     import Message from "../../components/Message.svelte";
-
     import {replace} from 'svelte-spa-router'
 
     let email = "";
     let password = "";
     let passwordConfirmation = "";
     let error;
+    let notification;
+    let thisMessage;
 
     const dispatch = createEventDispatcher();
 
@@ -21,7 +22,8 @@
     $: passwordConfirmValid = (password === passwordConfirmation);
     $: formIsValid = passwordValid && emailValid && passwordConfirmValid;
 
-    async function submitForm() {
+    async function submitForm(e) {
+        e.preventDefault();
         try {
             const userData = {
                 email: email,
@@ -30,6 +32,7 @@
             };
             const res = await api.post('users/register', userData);
             if (res && res.errors ) {
+                thisMessage = true
                 error = res.errors.message;
             } else {
                 ls.set('jwt', res.token.token);
@@ -38,17 +41,19 @@
             }
         } catch (err) {
             if(err){
+                thisMessage = true
                 return error = err
             }
         }
     }
-    function cancel() {
-        dispatch("cancel");
-    }
+
     function handleKeyDown(event) {
-        if(event.keyCode === 13){
-            submitForm();
+        if(event.keyCode === 13 && formIsValid){
+            submitForm(event);
         }
+    }
+    function closeThisMessage(){
+        thisMessage = null;
     }
 </script>
 
@@ -58,8 +63,8 @@
 
 <svelte:window on:keydown={handleKeyDown}/>
 
-{#if error}
-    <Message message="{error}" messageType="warning"/>
+{#if thisMessage}
+<Message message="{error}" on:closeMessageEvent={closeThisMessage} messageType="warning"/>
 {/if}
 
 <form>
@@ -76,7 +81,7 @@
             label="Password"
             type="password"
             valid={passwordValid}
-            validityMessage="Please enter a valid password."
+            validityMessage="Password minimum length 8, must have 1 capital letter, 1 number and 1 special character."
             value={password}
             className="is-large"
             on:input={event => (password = event.target.value)} />
@@ -89,6 +94,6 @@
             value={passwordConfirmation}
             className="is-large"
             on:input={event => (passwordConfirmation = event.target.value)} />
-            <button class="button is-primary is-pulled-right" on:click|preventDefault={submitForm} disabled={!formIsValid}>Register</button>
+            <button class="button is-primary is-pulled-right" on:click={submitForm} disabled={!formIsValid}>Register</button>
 
 </form>

@@ -1,14 +1,14 @@
 <script>
-  import Router from "svelte-spa-router";
-  import Nav from "/src/components/Nav.svelte";
-  import routes from "./routes";
-  import { replace } from "svelte-spa-router";
+  import Router from "svelte-spa-router"
+  import Nav from "/src/components/Nav.svelte"
+  import routes from "./routes"
+  import { replace } from "svelte-spa-router"
 
   const d = new Date();
   let year = d.getFullYear();
   let companyName = process.env.COMPANY_NAME;
 
-  // Handles the "conditionsFailed" event dispatched by the router when a component can't be loaded because one of its pre-condition failed
+// Handles the "conditionsFailed" event dispatched by the router when a component can't be loaded because one of its pre-condition failed
   function conditionsFailed(event) {
     // Perform any action, for example replacing the current route
     if (

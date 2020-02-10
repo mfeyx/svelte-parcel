@@ -8,14 +8,13 @@
 
   let unsubscribe;
   let currentUser;
-  let token;
   let userId;
   let isAdmin = null;
   let isActive = false;
   let userName = "";
   let avatar = '';
 
-  token = ls.get("jwt");
+  const token = ls.get("jwt");
 
   onMount(async () => {
     unsubscribe = await userStore.subscribe(userData => {
@@ -74,6 +73,12 @@
       isActive = false;
     }
   }
+
+  onDestroy(() => {
+    if (unsubscribe) {
+        unsubscribe();
+    }
+    });
 </script>
 
 <svelte:body on:click={bodyClicked} />
