@@ -12,6 +12,7 @@
   import { Toast } from "../../helpers/toast"
   import LoadingSpinner from '../../components/Ui/LoadingSpinner.svelte'
 
+  let isLoading = true;
   let unsubscribe;
   let memberSince;
   let currentUser;
@@ -27,7 +28,6 @@
   let gender = '';
   let password = '';
   let passwordConfirmation = '';
-  let isLoading = true;
 
   token = ls.get("jwt");
 
@@ -137,11 +137,14 @@
 
 {#if currentUser}
   <section>
-    <div class="content clear">
-      <h1 class="is-pulled-left">Profile Information</h1>
-    </div>
-
     <div class="card profile is-clearfix">
+    <header class="card-header">
+          <div class="card-header-title">
+            Profile Information
+      </div>
+      <div class="card-header-icon">:::</div>
+    </header>
+
       <div class="card-image">
         <figure class="image is-4by3">
           {#if currentUser.avatar}

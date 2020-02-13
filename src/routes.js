@@ -14,6 +14,7 @@ import Contact from './routes/Contact.svelte'
 import Forgot from './routes/Forgot.svelte'
 import Reset from './routes/Reset.svelte'
 import AdminPanel from './routes/admin/Panel.svelte'
+import UserPage from './routes/admin/UserPage.svelte'
 import userStore from './stores/user-store.js'
 import jwt_decode from 'jwt-decode'
 import ls from 'local-storage'
@@ -86,6 +87,16 @@ routes = {
     ),
     '/admin/panel': wrap(
         AdminPanel,
+        (detail) => {
+            if (ls.get('jwt')) {
+                return true
+            } else {
+                return false
+            }
+        }
+    ),
+    '/admin/users/:id': wrap(
+        UserPage,
         (detail) => {
             if (ls.get('jwt')) {
                 return true

@@ -1,4 +1,5 @@
 <script>
+  import {onMount, onDestroy} from 'svelte';
   import * as api from "../../helpers/api";
   import Message from "../../components/Message.svelte";
   import LoadingSpinner from "../../components/Ui/LoadingSpinner.svelte";
@@ -7,52 +8,77 @@
   import { replace } from "svelte-spa-router";
   import { Toast } from "../../helpers/toast";
   import defaultImg from "../../assets/images/default-image.jpg";
+  import {paginate, PaginationNav} from '../../components/UI/paginate';
+  import usersStore from '../../stores/usersStore';
 
+  let items = [];
   let error;
   let isLoading = true;
-  let users = [];
   let memberSince;
   let isAdmin;
+  let unsubscibe;
+
+  let currentPage;
+  let pageSize;
+  let totalItems;
+  let users;
 
   const token = ls.get("jwt");
 
-  (async () => {
-    try {
-      const res = await api.get("admin/users", token);
-      if (res && res.errors) {
-        error = res.errors.message;
-        isLoading = false;
-        new Toast({
-          message: res.errors.message,
-          type: "success"
-        });
-        return replace("/");
-      }
-      if (res) {
-        isLoading = false;
-        for (const key in res) {
-          users.push({
-            ...res[key]
+    async function getUsers(currentPage){
+      try {
+        const res = await api.get(`admin/users/${currentPage}`, token);
+        if (res && res.errors) {
+          error = res.errors.message;
+          isLoading = false;
+          new Toast({
+            message: res.errors.message,
+            type: "success"
           });
         }
-        return (users = res);
-      }
-    } catch (err) {
-      isLoading = false;
-      error = err;
-    }
-  })();
-</script>
+        if(res && res.errors && res.message === 'message: Not sufficient permissions!'){
+          ls.remove('jwt');
+          return window.location.replace('/');
+        }
+        usersStore.setUsers(res.users);
+        items = res.users;      
+        users = res.users;
+        totalItems = res.totalItems;
+        pageSize = res.resPerPage;
+        isLoading = false;
 
-<style>
-  .default-img {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    vertical-align: middle;
-  }
-</style>
+        return users;
+      
+      } catch (err) {
+        isLoading = false;
+        error = err;
+        this.error(500, "Could not fetch users!");
+        ls.remove('jwt');
+        return window.location.replace("/");
+      }
+ 
+    }
+
+    getUsers(currentPage);
+
+  $: paginatedItem = paginate({items, pageSize, currentPage});
+  
+     unsubscibe = usersStore.subscribe(i => {
+       users = i
+     })
+    
+    onDestroy(() => {
+      if(unsubscibe){
+        unsubscibe();
+      }
+    })
+
+    function handleSetPage(e){
+      currentPage = e.detail.page
+      getUsers(currentPage);
+    }
+
+</script>
 
 <svelte:head>
   <title>Admin Panel</title>
@@ -70,7 +96,11 @@
 {:else}
   <section>
     <div class="card">
-      <h1 class="card-header-title">Admin Panel</h1>
+    <header class="card-header">
+      <div class="card-header-title">Admin Panel</div>
+      <div class="card-header-icon">:::</div>
+    </header>
+
       <div class="tabs">
         <ul>
           <li class="is-active">
@@ -111,12 +141,12 @@
                 <th>
                   <abbr title="Customer Since">Customer Since</abbr>
                 </th>
+                <th><abbr title="Action Button">Action</abbr></th>
               </tr>
             </thead>
             <tbody>
-
-              {#each users as user, i}
-                <tr>
+              {#each users as user, i}  
+                <tr>                          
                   <td>
                     {i + 1}
                     {#if user.avatar}
@@ -139,57 +169,50 @@
                   <td>{user.profile.website}</td>
                   <td>{user.profile.location}</td>
                   <td>{formatDate(user.createdAt)}</td>
-                </tr>
+                  <td><a href="#/admin/users/{user._id}"><i class="fa fa-link link" aria-hidden="true"></i></a></td>
+                </tr>                        
               {/each}
-
             </tbody>
           </table>
-
         </div>
 
-        <nav class="pagination" role="navigation" aria-label="pagination">
-          <a href="#/admin/panel" class="pagination-previous">Previous</a>
-          <a href="#/admin/panel" class="pagination-next">Next page</a>
-          <ul class="pagination-list">
-            <li>
-              <a href="#/admin/panel" class="pagination-link" aria-label="Goto page 1">
-                1
-              </a>
-            </li>
-            <li>
-              <span class="pagination-ellipsis">&hellip;</span>
-            </li>
-            <li>
-              <a href="#/admin/panel" class="pagination-link" aria-label="Goto page 45">
-                45
-              </a>
-            </li>
-            <li>
-              <a
-                href="#/admin/panel"
-                class="pagination-link is-current"
-                aria-label="Page 46"
-                aria-current="page">
-                46
-              </a>
-            </li>
-            <li>
-              <a href="#/admin/panel" class="pagination-link" aria-label="Goto page 47">
-                47
-              </a>
-            </li>
-            <li>
-              <span class="pagination-ellipsis">&hellip;</span>
-            </li>
-            <li>
-              <a href="#/admin/panel" class="pagination-link" aria-label="Goto page 86">
-                86
-              </a>
-            </li>
-          </ul>
-        </nav>
+      <PaginationNav
+        totalItems="{totalItems}"
+        pageSize="{pageSize}"
+        currentPage="{currentPage}"
+        limit="{1}"
+        showStepOptions="{true}"
+        on:setPage="{handleSetPage}"
+      /> 
+
       </div>
 
     </div>
   </section>
 {/if}
+
+
+<style>
+  li.active a{
+    color: #00818b;
+  }
+  .tabs{
+    margin: 20px 0;
+  }
+  .default-img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  .link{
+    background: #FDAC17;
+    padding: 12px;
+    float: right;
+    color:white;
+  }
+  .link:hover{
+    opacity: .9;
+  }
+</style>

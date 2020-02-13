@@ -20,7 +20,8 @@ Express JS server side repo can be found here [express-api](https://github.com/m
 - User profile page with [gravatar](https://en.gravatar.com/) if availabe else adds a defautl image
 - User forgot password
 - User roles (customer, admin etc)
-- Admin panel section - (currently I am only fetching users) TODO pagination
+- Admin panel section - (currently I am only fetching sample db users)
+- Pagination inpired by [svelte-paginate](https://github.com/TahaSh/svelte-paginate#readme) - TODO improve pagination
 - Contact forms with [Nodemailer](https://nodemailer.com/about/) on the server side and [Sendgrid](https://sendgrid.com/)
 - Works with this Express API server [express-api](https://github.com/mylastore/express-api.git)
 
