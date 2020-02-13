@@ -124,6 +124,9 @@
                   <abbr title="Position">Pos</abbr>
                 </th>
                 <th>
+                  <abbr title="User Porfolio Image">Image</abbr>
+                </th>
+                <th>
                   <abbr title="Email">Email</abbr>
                 </th>
                 <th>
@@ -149,6 +152,8 @@
                 <tr>                          
                   <td>
                     {i + 1}
+                  </td>
+                  <td>
                     {#if user.avatar}
                       <img
                         class="default-img"
