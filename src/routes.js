@@ -13,7 +13,7 @@ import Privacy from './routes/Privacy.svelte'
 import Contact from './routes/Contact.svelte'
 import Forgot from './routes/Forgot.svelte'
 import Reset from './routes/Reset.svelte'
-import AdminPanel from './routes/admin/Panel.svelte'
+import AdminUsers from './routes/admin/Users.svelte'
 import UserPage from './routes/admin/UserPage.svelte'
 import userStore from './stores/user-store.js'
 import jwt_decode from 'jwt-decode'
@@ -22,13 +22,12 @@ import * as api from './helpers/api'
 import {replace} from 'svelte-spa-router'
 import {Toast} from './helpers/toast'
 
-/* This will resfresh user data on the userStore only on browser reload */
-const token = ls.get('jwt');
-if (token) {
-    const decoded = jwt_decode(token)
+/* This will resfresh user data on the userStore only if browser reloads */
+if (ls.get('jwt')) {
+    const decoded = jwt_decode(ls.get('jwt'))
     const userId = decoded.id;
     (async () => {
-        const res = await api.get(`users/${userId}`, token)
+        const res = await api.get(`users/${userId}`, ls.get('jwt'))
         if (res && res.errors) {
             ls.remove('jwt')
             replace('/')
@@ -85,8 +84,8 @@ routes = {
             return false
         }
     ),
-    '/admin/panel': wrap(
-        AdminPanel,
+    '/admin/users/:page': wrap(
+        AdminUsers,
         (detail) => {
             if (ls.get('jwt')) {
                 return true
@@ -95,7 +94,7 @@ routes = {
             }
         }
     ),
-    '/admin/users/:id': wrap(
+    '/admin/user/:id': wrap(
         UserPage,
         (detail) => {
             if (ls.get('jwt')) {

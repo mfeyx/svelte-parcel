@@ -1,3 +1,4 @@
+
 export default function ({ items, pageSize, currentPage }) {
   return items
     .slice(

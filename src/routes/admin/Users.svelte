@@ -5,9 +5,10 @@
   import LoadingSpinner from "../../components/Ui/LoadingSpinner.svelte";
   import ls from "local-storage";
   import { formatDate } from "../../helpers/utils";
-  import { replace } from "svelte-spa-router";
+  import { push, replace } from "svelte-spa-router";
   import { Toast } from "../../helpers/toast";
   import defaultImg from "../../assets/images/default-image.jpg";
+  import {location} from 'svelte-spa-router';
   import {paginate, PaginationNav} from '../../components/UI/paginate';
   import usersStore from '../../stores/usersStore';
 
@@ -17,28 +18,19 @@
   let memberSince;
   let isAdmin;
   let unsubscibe;
-
   let currentPage;
   let pageSize;
   let totalItems;
   let users;
+  let pageNumber;
 
   const token = ls.get("jwt");
-
     async function getUsers(currentPage){
       try {
         const res = await api.get(`admin/users/${currentPage}`, token);
         if (res && res.errors) {
           error = res.errors.message;
           isLoading = false;
-          new Toast({
-            message: res.errors.message,
-            type: "success"
-          });
-        }
-        if(res && res.errors && res.message === 'message: Not sufficient permissions!'){
-          ls.remove('jwt');
-          return window.location.replace('/');
         }
         usersStore.setUsers(res.users);
         items = res.users;      
@@ -52,18 +44,14 @@
       } catch (err) {
         isLoading = false;
         error = err;
-        this.error(500, "Could not fetch users!");
         ls.remove('jwt');
         return window.location.replace("/");
       }
- 
-    }
-
+     }
     getUsers(currentPage);
 
   $: paginatedItem = paginate({items, pageSize, currentPage});
-  
-     unsubscibe = usersStore.subscribe(i => {
+      unsubscibe = usersStore.subscribe(i => {
        users = i
      })
     
@@ -73,11 +61,19 @@
       }
     })
 
-    function handleSetPage(e){
-      currentPage = e.detail.page
-      getUsers(currentPage);
-    }
+    window.onhashchange = function() { 
+      pageNumber = $location.substring($location.lastIndexOf('/') + 1);
+      getUsers(pageNumber);
 
+    }
+    function handleSetPage(e){
+      currentPage = e.detail.page;
+      push(`/admin/users/${currentPage}`);
+    }
+    function handleCurrent(e){
+      console.log('handleCurrent ', e.detail);
+    }
+  
 </script>
 
 <svelte:head>
@@ -100,7 +96,6 @@
       <div class="card-header-title">Admin Panel</div>
       <div class="card-header-icon">:::</div>
     </header>
-
       <div class="tabs">
         <ul>
           <li class="is-active">

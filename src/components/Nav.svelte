@@ -30,19 +30,6 @@
          
         }
 
-      // if (currentUser.profile) {
-      //   const obj = currentUser.profile;
-
-      //   if (
-      //     (Object.entries(obj).length === 0 && obj.constructor === Object) ||
-      //     currentUser.profile.name === ""
-      //   ) {
-      //     userName = currentUser.email;
-      //   } else {
-      //     userName = currentUser.profile.name;
-      //   }
-      // }
-    
       isAdmin = currentUser.role === "admin";
       userId = userData.id;
     });
@@ -119,7 +106,7 @@
           <span class="navbar-link">{userName}</span>
           <div class="navbar-dropdown is-right">
             {#if isAdmin}
-              <a class="navbar-item" href="/admin/panel" use:link>Admin</a>
+              <a class="navbar-item" href="/admin/users/1" use:link>Admin</a>
             {/if}
             <a class="navbar-item" href="/user/profile" use:link>Profile</a>
             <hr class="navbar-divider" />
@@ -131,7 +118,6 @@
     </div>
   </div>
 </nav>
-
 
 <style>
   .avatar.navbar-item img{

@@ -1,4 +1,5 @@
 <script>
+  import {location} from 'svelte-spa-router';
   import { createEventDispatcher } from "svelte";
   import generateNavigationOptions from "./generateNavigationOptions";
   import { PREVIOUS_PAGE, NEXT_PAGE, ELLIPSIS } from "./symbolTypes";
@@ -14,9 +15,15 @@
   export let currentPage = 1;
   export let limit = null;
   export let showStepOptions = false;
+  export let setPage = page => {
+    currentPage = page;
+  };
 
   let gotoPage;
   let unsubscibe;
+  let urlPage;
+  let dataId;
+  let element;
 
   $: options = generateNavigationOptions({
     totalItems,
@@ -31,9 +38,10 @@
   function handleOptionClick(option) {
     dispatch("setPage", { page: option.value });
   }
-  export let setPage = page => {
-    currentPage = page;
-  };
+
+  window.addEventListener('hashchange', function(e){
+    urlPage = $location.substring($location.lastIndexOf('/') + 1);
+  });
 
 </script>
 
@@ -66,15 +74,14 @@
 
   <ul class="pagination-list">
     {#each options as option}
-      <li
-        class:pageNumber={option.type === 'number'}
-        class:ellipsis={option.type === 'symbol' && option.symbol === ELLIPSIS}
-        on:click={() => handleOptionClick(option)}
-        >
+      <li      
+        class:ellipsis={option.type === 'symbol' && option.symbol === ELLIPSIS}>
         {#if option.type === 'number'}
           <slot name="number" value={option.value}>
             <a
-            href="0#" 
+            href="/{option.value}"
+            id="{option.value}"
+            data-id="{option.value}"
             class="pagination-link" 
             class:is-current={option.type === 'number' && option.value === currentPage}
             on:click|preventDefault={() => handleOptionClick(option)}
@@ -91,6 +98,7 @@
     {/each}
   </ul>
 </nav>
+
 <style>
 .ellipsis{
   cursor: not-allowed;

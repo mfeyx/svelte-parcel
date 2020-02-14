@@ -15,7 +15,8 @@
       event.detail.location === "/login" ||
       event.detail.location === "/register" ||
       event.detail.location === "/user/profile" ||
-      event.detail.location === "/admin/panel"
+      event.detail.location === "/admin/user/*" ||
+      event.detail.location === "/admin/users/*"
     ) {
       replace("/");
     }
