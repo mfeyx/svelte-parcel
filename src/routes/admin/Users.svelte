@@ -1,5 +1,5 @@
 <script>
-  import {onMount, onDestroy} from 'svelte';
+  import { onMount, onDestroy } from "svelte";
   import * as api from "../../helpers/api";
   import Message from "../../components/Message.svelte";
   import LoadingSpinner from "../../components/Ui/LoadingSpinner.svelte";
@@ -8,9 +8,9 @@
   import { push, replace } from "svelte-spa-router";
   import { Toast } from "../../helpers/toast";
   import defaultImg from "../../assets/images/default-image.jpg";
-  import {location} from 'svelte-spa-router';
-  import {paginate, PaginationNav} from '../../components/UI/paginate';
-  import usersStore from '../../stores/usersStore';
+  import { location } from "svelte-spa-router";
+  import { paginate, PaginationNav } from "../../components/UI/paginate";
+  import usersStore from "../../stores/usersStore";
 
   let items = [];
   let error;
@@ -25,56 +25,77 @@
   let pageNumber;
 
   const token = ls.get("jwt");
-    async function getUsers(currentPage){
-      try {
-        const res = await api.get(`admin/users/${currentPage}`, token);
-        if (res && res.errors) {
-          error = res.errors.message;
-          isLoading = false;
-        }
-        usersStore.setUsers(res.users);
-        items = res.users;      
-        users = res.users;
-        totalItems = res.totalItems;
-        pageSize = res.resPerPage;
+  async function getUsers(currentPage) {
+    try {
+      const res = await api.get(`admin/users/${currentPage}`, token);
+      if (res && res.errors) {
+        error = res.errors.message;
         isLoading = false;
-
-        return users;
-      
-      } catch (err) {
-        isLoading = false;
-        error = err;
-        ls.remove('jwt');
-        return window.location.replace("/");
       }
-     }
-    getUsers(currentPage);
+      usersStore.setUsers(res.users);
+      items = res.users;
+      users = res.users;
+      totalItems = res.totalItems;
+      pageSize = res.resPerPage;
+      isLoading = false;
 
-  $: paginatedItem = paginate({items, pageSize, currentPage});
-      unsubscibe = usersStore.subscribe(i => {
-       users = i
-     })
-    
-    onDestroy(() => {
-      if(unsubscibe){
-        unsubscibe();
-      }
-    })
+      return users;
+    } catch (err) {
+      isLoading = false;
+      error = err;
+      ls.remove("jwt");
+      return window.location.replace("/");
+    }
+  }
+  getUsers(currentPage);
 
-    window.onhashchange = function() { 
-      pageNumber = $location.substring($location.lastIndexOf('/') + 1);
-      getUsers(pageNumber);
+  $: paginatedItem = paginate({ items, pageSize, currentPage });
 
+  unsubscibe = usersStore.subscribe(i => {
+    users = i;
+  });
+
+  onDestroy(() => {
+    if (unsubscibe) {
+      unsubscibe();
     }
-    function handleSetPage(e){
-      currentPage = e.detail.page;
-      push(`/admin/users/${currentPage}`);
-    }
-    function handleCurrent(e){
-      console.log('handleCurrent ', e.detail);
-    }
-  
+  });
+
+  window.onhashchange = function() {
+    pageNumber = $location.substring($location.lastIndexOf("/") + 1);
+    getUsers(pageNumber);
+    currentPage = parseInt(pageNumber);
+  };
+  function handleSetPage(e) {
+    currentPage = e.detail.page;
+    push(`/admin/users/${e.detail.page}`);
+  }
 </script>
+
+<style>
+  li.active a {
+    color: #00818b;
+  }
+  .tabs {
+    margin: 20px 0;
+  }
+  .default-img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  .link {
+    background: #fdac17;
+    padding: 12px;
+    float: right;
+    color: white;
+  }
+  .link:hover {
+    opacity: 0.9;
+  }
+</style>
 
 <svelte:head>
   <title>Admin Panel</title>
@@ -92,10 +113,10 @@
 {:else}
   <section>
     <div class="card">
-    <header class="card-header">
-      <div class="card-header-title">Admin Panel</div>
-      <div class="card-header-icon">:::</div>
-    </header>
+      <header class="card-header">
+        <div class="card-header-title">Admin Panel</div>
+        <div class="card-header-icon">:::</div>
+      </header>
       <div class="tabs">
         <ul>
           <li class="is-active">
@@ -139,15 +160,15 @@
                 <th>
                   <abbr title="Customer Since">Customer Since</abbr>
                 </th>
-                <th><abbr title="Action Button">Action</abbr></th>
+                <th>
+                  <abbr title="Action Button">Action</abbr>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {#each users as user, i}  
-                <tr>                          
-                  <td>
-                    {i + 1}
-                  </td>
+              {#each users as user, i}
+                <tr>
+                  <td>{i + 1}</td>
                   <td>
                     {#if user.avatar}
                       <img
@@ -169,50 +190,27 @@
                   <td>{user.profile.website}</td>
                   <td>{user.profile.location}</td>
                   <td>{formatDate(user.createdAt)}</td>
-                  <td><a href="#/admin/users/{user._id}"><i class="fa fa-link link" aria-hidden="true"></i></a></td>
-                </tr>                        
+                  <td>
+                    <a href="#/admin/users/{user._id}">
+                      <i class="fa fa-link link" aria-hidden="true" />
+                    </a>
+                  </td>
+                </tr>
               {/each}
             </tbody>
           </table>
         </div>
 
-      <PaginationNav
-        totalItems="{totalItems}"
-        pageSize="{pageSize}"
-        currentPage="{currentPage}"
-        limit="{1}"
-        showStepOptions="{true}"
-        on:setPage="{handleSetPage}"
-      /> 
+        <PaginationNav
+          {totalItems}
+          {pageSize}
+          currentPage={currentPage}
+          limit={1}
+          showStepOptions={true}
+          on:setPage={handleSetPage} />
 
       </div>
 
     </div>
   </section>
 {/if}
-
-
-<style>
-  li.active a{
-    color: #00818b;
-  }
-  .tabs{
-    margin: 20px 0;
-  }
-  .default-img {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    vertical-align: middle;
-  }
-  .link{
-    background: #FDAC17;
-    padding: 12px;
-    float: right;
-    color:white;
-  }
-  .link:hover{
-    opacity: .9;
-  }
-</style>

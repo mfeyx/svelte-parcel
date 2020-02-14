@@ -30,7 +30,7 @@ if (ls.get('jwt')) {
         const res = await api.get(`users/${userId}`, ls.get('jwt'))
         if (res && res.errors) {
             ls.remove('jwt')
-            replace('/')
+            window.location.replace('/');
         }
         return userStore.setUser(res.user)
     })().catch(err => {
@@ -40,7 +40,7 @@ if (ls.get('jwt')) {
         });
         //remove token incase server error and login route will be accesible 
         ls.remove('jwt')
-        replace('/')
+        window.location.replace('/')
     });
 }
 

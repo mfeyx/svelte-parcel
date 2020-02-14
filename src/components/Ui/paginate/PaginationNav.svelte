@@ -21,9 +21,10 @@
 
   let gotoPage;
   let unsubscibe;
-  let urlPage;
+  let urlPage = 1;
   let dataId;
   let element;
+  let isCurrent = false;
 
   $: options = generateNavigationOptions({
     totalItems,
@@ -38,11 +39,6 @@
   function handleOptionClick(option) {
     dispatch("setPage", { page: option.value });
   }
-
-  window.addEventListener('hashchange', function(e){
-    urlPage = $location.substring($location.lastIndexOf('/') + 1);
-  });
-
 </script>
 
 <nav class="pagination" role="navigation" aria-label="pagination">
@@ -82,7 +78,7 @@
             href="/{option.value}"
             id="{option.value}"
             data-id="{option.value}"
-            class="pagination-link" 
+            class="pagination-link"
             class:is-current={option.type === 'number' && option.value === currentPage}
             on:click|preventDefault={() => handleOptionClick(option)}
             >
@@ -100,12 +96,12 @@
 </nav>
 
 <style>
-.ellipsis{
-  cursor: not-allowed;
-  pointer-events: none;
-}
-.disabled{
-  background: lightgray;
-  cursor: not-allowed;
-}
+  .ellipsis{
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .disabled{
+    background: lightgray;
+    cursor: not-allowed;
+  }
 </style>
