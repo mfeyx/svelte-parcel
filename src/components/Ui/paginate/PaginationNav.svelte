@@ -1,13 +1,8 @@
 <script>
-  import {location} from 'svelte-spa-router';
   import { createEventDispatcher } from "svelte";
   import generateNavigationOptions from "./generateNavigationOptions";
   import { PREVIOUS_PAGE, NEXT_PAGE, ELLIPSIS } from "./symbolTypes";
-  import * as api from '../../../helpers/api';
-  import ls from 'local-storage';
-  import usersStore from '../../../stores/usersStore';
 
-  const token = ls.get('jwt');
   const dispatch = createEventDispatcher();
 
   export let totalItems = 0;
@@ -18,13 +13,6 @@
   export let setPage = page => {
     currentPage = page;
   };
-
-  let gotoPage;
-  let unsubscibe;
-  let urlPage = 1;
-  let dataId;
-  let element;
-  let isCurrent = false;
 
   $: options = generateNavigationOptions({
     totalItems,

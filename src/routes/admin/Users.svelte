@@ -22,7 +22,7 @@
   let pageSize;
   let totalItems;
   let users;
-  let pageNumber;
+  let pageNumber = 1;
 
   const token = ls.get("jwt");
   async function getUsers(currentPage) {
