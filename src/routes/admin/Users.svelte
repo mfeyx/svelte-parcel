@@ -191,7 +191,7 @@
                   <td>{user.profile.location}</td>
                   <td>{formatDate(user.createdAt)}</td>
                   <td>
-                    <a href="#/admin/users/{user._id}">
+                    <a href="#/admin/user/{user._id}">
                       <i class="fa fa-link link" aria-hidden="true" />
                     </a>
                   </td>

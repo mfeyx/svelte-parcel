@@ -1,5 +1,5 @@
 
-const base = 'http://localhost:8000/api/v1';
+const base = 'https://localhost:8000/api/v1';
 
 function send({ method, path, data, token }) {
 	const fetch = process.browser ? window.fetch : require('node-fetch').default;
